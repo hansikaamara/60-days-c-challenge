@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+int main() {
+    float dataUsed, totalBill = 0, baseCost = 0, extraCost = 0, discount = 0;
+    int student, corporate;
+    char planName[20];
+
+   
+    printf("Enter total data used this month (in GB): ");
+    scanf("%f", &dataUsed);
+    printf("Are you a student? (1 for Yes / 0 for No): ");
+    scanf("%d", &student);
+    printf("Are you a corporate user? (1 for Yes / 0 for No): ");
+    scanf("%d", &corporate);
+
+   
+    if (dataUsed > 100) {
+        printf("\nExcessive Usage – Plan Not Allowed\n");
+    } 
+    else {
+        
+        if (dataUsed < 30) {
+            baseCost = 299;
+            float limit = 30;   
+            float dailyLimit = 1 * 30; 
+            extraCost = (dataUsed > dailyLimit) ? (dataUsed - dailyLimit) * 50 : 0;
+            sprintf(planName, "Silver");
+        } 
+        else if (dataUsed <= 60) {
+            baseCost = 499;
+            float limit = 60;
+            float dailyLimit = 2 * 30; 
+            extraCost = (dataUsed > dailyLimit) ? (dataUsed - dailyLimit) * 40 : 0;
+            sprintf(planName, "Gold");
+        } 
+        else {
+            baseCost = 799;
+            float limit = 90;  
+            float dailyLimit = 3 * 30; 
+            extraCost = (dataUsed > dailyLimit) ? (dataUsed - dailyLimit) * 30 : 0;
+            sprintf(planName, "Platinum");
+        }
+
+       
+        totalBill = baseCost + extraCost;
+
+        
+        if (student == 1 && corporate == 1)
+            discount = (0.15 > 0.10) ? 0.15 : 0.10;  
+        else if (student == 1)
+            discount = 0.15;
+        else if (corporate == 1)
+            discount = 0.10;
+        else
+            discount = 0;
+
+        totalBill = totalBill - (totalBill * discount);
+
+        
+        printf(" USER BILL SUMMARY\n");
+        printf("Plan Selected     : %s\n", planName);
+        printf("Data Used         : %.2f GB\n", dataUsed);
+        printf("Base Cost         : ₹%.2f\n", baseCost);
+        printf("Extra Data Charges: ₹%.2f\n", extraCost);
+        printf("Discount Applied  : %.0f%%\n", discount * 100);
+        printf("Final BILL    : ₹%.2f\n", totalBill);
+        
+    }
+
+    return 0;
+}
